@@ -129,32 +129,32 @@ TEMPLATES = [
 WSGI_APPLICATION = 'browser_backend.wsgi.application'
 
 
-# Database
-# https://docs.djangoproject.com/en/5.0/ref/settings/#databases
-
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.postgresql',
-#         'NAME': 'postgres',          
-#         'USER': getenv('POSTGRES_USER'),          
-#         'PASSWORD': getenv('POSTGRES_PASSWORD'),  
-#         'HOST': 'aws-0-ap-south-1.pooler.supabase.com',          
-#         'PORT': '6543',          
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'db',  # Database name
+        'USER': 'db',  # Username
+        'PASSWORD': getenv('DATABASE_PASSWORD'),  # Password
+        'HOST': 'app-0ad30b3f-ea79-43a3-828e-8f34cdd46703-do-user-17176678-0.b.db.ondigitalocean.com',
+        'PORT': '25060',
+        'OPTIONS': {
+            'sslmode': 'require',  # Ensure SSL mode is required
+        },
+    }
+}
+# if DEVELOPMENT_MODE is True:
+#     DATABASES = {
+#         'default': {
+#             'ENGINE': 'django.db.backends.sqlite3',
+#             'NAME': BASE_DIR / 'db.sqlite3',
+#         }
 #     }
-# }
-if DEVELOPMENT_MODE is True:
-    DATABASES = {
-        'default': {
-            'ENGINE': 'django.db.backends.sqlite3',
-            'NAME': BASE_DIR / 'db.sqlite3',
-        }
-    }
-elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
-    if getenv('DATABASE_URL', None) is None:
-        raise Exception('DATABASE_URL environment variable not defined')
-    DATABASES = {
-        'default': dj_database_url.parse( ('DATABASE_URL')),
-    }
+# elif len(sys.argv) > 0 and sys.argv[1] != 'collectstatic':
+#     if getenv('DATABASE_URL', None) is None:
+#         raise Exception('DATABASE_URL environment variable not defined')
+#     DATABASES = {
+#         'default': dj_database_url.parse( ('DATABASE_URL')),
+#     }
 
 
 AUTH_PASSWORD_VALIDATORS = [
