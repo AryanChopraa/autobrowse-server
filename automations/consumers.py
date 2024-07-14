@@ -391,6 +391,7 @@ import re
 import time
 import json
 import base64
+from os import getenv, path
 import os
 import asyncio
 from dotenv import load_dotenv
@@ -407,8 +408,9 @@ load_dotenv()
 
 GPT_MODEL = "gpt-4o"
 SCREENSHOT_PATH = './screenshot.png'
+STARTING_SCENE_PATH = './startingscene.png'
 
-client = OpenAI(api_key="sk-proj-V9xPa2nvdJ4DFj4c4bLdT3BlbkFJy7dcTnyIoaZdlqcJNF0R")
+client = OpenAI(api_key=getenv("OPENAI_API_KEY"))
 
 tools = [
     {
@@ -692,8 +694,8 @@ class ChatConsumer(AsyncWebsocketConsumer):
         await self.send(text_data=json.dumps({"message": "Connected to WebSocket"}))
 
     async def disconnect(self, close_code):
-        # if os.path.exists(SCREENSHOT_PATH):
-        #     os.remove(SCREENSHOT_PATH)
+        if os.path.exists(SCREENSHOT_PATH):
+            os.remove(SCREENSHOT_PATH)
         pass
         # Cleanup code here (e.g., closing the driver)
         pass
@@ -709,8 +711,11 @@ class ChatConsumer(AsyncWebsocketConsumer):
 
     async def send_screenshots(self, driver):
         while True:
-            await asyncio.sleep(2)  # Wait for 2 seconds
-            base64img = await asyncio.to_thread(encode_image, SCREENSHOT_PATH)
+            await asyncio.sleep(1)  # Wait for 2 seconds
+            if os.path.exists(SCREENSHOT_PATH):
+                base64img = await asyncio.to_thread(encode_image, SCREENSHOT_PATH)
+            else:
+                base64img = await asyncio.to_thread(encode_image, STARTING_SCENE_PATH)
             await self.send(text_data=json.dumps({"screenshot": base64img}))
 
     async def main_loop(self, objective):
