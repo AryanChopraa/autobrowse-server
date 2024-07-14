@@ -276,10 +276,9 @@ DJOSER = {
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 AUTH_USER_MODEL = 'users.UserAccount'
-DEBUG = True
 
 
-ASGI_APPLICATION = 'your_project.asgi.application'
+ASGI_APPLICATION = 'browser_backend.asgi.application'
 
 CHANNEL_LAYERS = {
     'default': {
