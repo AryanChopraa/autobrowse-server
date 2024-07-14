@@ -140,7 +140,7 @@ WSGI_APPLICATION = 'browser_backend.wsgi.application'
 #         'PASSWORD': getenv('POSTGRES_PASSWORD'),  
 #         'HOST': 'aws-0-ap-south-1.pooler.supabase.com',          
 #         'PORT': '6543',          
-#     }
+#     }\
 # }
 if DEVELOPMENT_MODE is True:
     DATABASES = {
