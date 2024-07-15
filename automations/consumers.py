@@ -395,8 +395,8 @@ from os import getenv, path
 import os
 import asyncio
 from dotenv import load_dotenv
-from selenium import webdriver
 from webdriver_manager.chrome import ChromeDriverManager
+from selenium import webdriver
 from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
@@ -541,20 +541,17 @@ tools = [
     }
 ]
 
+
 def initialize_driver():
-    # service = Service(ChromeDriverManager().install())
-    # options = webdriver.ChromeOptions()
-    # options.add_argument("--headless")
-    # options.add_argument('--window-size=1440,900')
-    # return webdriver.Chrome(service=service, options=options)
     options = Options()
     options.add_argument("--headless")
     options.add_argument('--window-size=1440,900')
     options.add_argument('--no-sandbox')
     options.add_argument('--disable-dev-shm-usage')
 
-    # Use Selenium's built-in WebDriver manager
-    driver = webdriver.Chrome(options=options)
+    # Use WebDriver Manager to handle ChromeDriver
+    service = Service(ChromeDriverManager().install())
+    driver = webdriver.Chrome(service=service, options=options)
     
     return driver
 
@@ -712,6 +709,7 @@ class ChatConsumer(AsyncWebsocketConsumer):
         pass
 
     async def receive(self, text_data):
+        print("receive", text_data)
         text_data_json = json.loads(text_data)
         if 'objective' in text_data_json:
             objective = text_data_json['objective']
