@@ -23,5 +23,11 @@ RUN CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_
 
 WORKDIR /app
 
-# Note: We're not copying requirements.txt or the app code here
+# Copy requirements file
+COPY requirements.txt .
+
+# Install Python dependencies
+RUN pip install --no-cache-dir -r requirements.txt
+
+# Note: We're not copying the app code here
 # This will be handled by DigitalOcean App Platform
