@@ -29,5 +29,8 @@ COPY requirements.txt .
 # Install Python dependencies
 RUN pip install --no-cache-dir -r requirements.txt
 
+# Add the current directory to PYTHONPATH
+ENV PYTHONPATH=/app:$PYTHONPATH
+
 # Note: We're not copying the app code here
 # This will be handled by DigitalOcean App Platform
