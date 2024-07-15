@@ -3,6 +3,9 @@ FROM python:3.10-slim-buster
 ENV PYTHONUNBUFFERED 1
 ENV DEBIAN_FRONTEND noninteractive
 
+WORKDIR /app
+
+# Install system dependencies
 RUN apt-get update && apt-get install -y \
     wget \
     gnupg \
@@ -10,6 +13,7 @@ RUN apt-get update && apt-get install -y \
     curl \
     && rm -rf /var/lib/apt/lists/*
 
+# Install Chrome and ChromeDriver (if needed for your automations)
 RUN wget -q -O - https://dl-ssl.google.com/linux/linux_signing_key.pub | apt-key add - \
     && echo "deb [arch=amd64] http://dl.google.com/linux/chrome/deb/ stable main" >> /etc/apt/sources.list.d/google.list \
     && apt-get update \
@@ -21,8 +25,6 @@ RUN CHROME_DRIVER_VERSION=$(curl -sS chromedriver.storage.googleapis.com/LATEST_
     unzip /tmp/chromedriver.zip chromedriver -d /usr/local/bin/ && \
     rm /tmp/chromedriver.zip
 
-WORKDIR /app
-
 # Copy requirements file
 COPY requirements.txt .
 
@@ -31,6 +33,9 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 # Add the current directory to PYTHONPATH
 ENV PYTHONPATH=/app:$PYTHONPATH
+
+# Print directory contents for debugging
+RUN echo "Contents of /app:" && ls -R /app
 
 # Note: We're not copying the app code here
 # This will be handled by DigitalOcean App Platform
