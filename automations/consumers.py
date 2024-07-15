@@ -403,8 +403,6 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from openai import OpenAI
 from channels.generic.websocket import AsyncWebsocketConsumer
-from webdriver_manager.core.utils import ChromeType
-
 
 load_dotenv()
 
@@ -544,11 +542,20 @@ tools = [
 
 def initialize_driver():
     # service = Service(ChromeDriverManager().install())
-    service = Service(ChromeDriverManager(version="specific_version").install())
-    options = webdriver.ChromeOptions()
+    # options = webdriver.ChromeOptions()
+    # options.add_argument("--headless")
+    # options.add_argument('--window-size=1440,900')
+    # return webdriver.Chrome(service=service, options=options)
+    options = Options()
     options.add_argument("--headless")
     options.add_argument('--window-size=1440,900')
-    return webdriver.Chrome(service=service, options=options)
+    options.add_argument('--no-sandbox')
+    options.add_argument('--disable-dev-shm-usage')
+
+    # Use Selenium's built-in WebDriver manager
+    driver = webdriver.Chrome(options=options)
+    
+    return driver
 
 def highlight_links(driver):
     script = """
