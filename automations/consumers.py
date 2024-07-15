@@ -403,6 +403,8 @@ from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
 from openai import OpenAI
 from channels.generic.websocket import AsyncWebsocketConsumer
+from webdriver_manager.core.utils import ChromeType
+
 
 load_dotenv()
 
@@ -541,7 +543,8 @@ tools = [
 ]
 
 def initialize_driver():
-    service = Service(ChromeDriverManager().install())
+    # service = Service(ChromeDriverManager().install())
+    service = Service(ChromeDriverManager(version="specific_version").install())
     options = webdriver.ChromeOptions()
     options.add_argument("--headless")
     options.add_argument('--window-size=1440,900')
