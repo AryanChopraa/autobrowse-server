@@ -3,7 +3,7 @@ FROM python:3.10-slim-buster
 ENV PYTHONUNBUFFERED 1
 ENV DEBIAN_FRONTEND noninteractive
 
-WORKDIR /app
+WORKDIR /BROWSER_BACKEND
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
@@ -32,10 +32,10 @@ COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
 # Add the current directory to PYTHONPATH
-ENV PYTHONPATH=/app:$PYTHONPATH
+ENV PYTHONPATH=/browser_backend:$PYTHONPATH
 
 # Print directory contents for debugging
-RUN echo "Contents of /app:" && ls -R /app
+RUN echo "Contents of /BROWSER_BACKEND:" && ls -R /BROWSER_BACKEND
 
-# Note: We're not copying the app code here
-# This will be handled by DigitalOcean App Platform
+# Copy the rest of the application
+COPY . .
