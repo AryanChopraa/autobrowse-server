@@ -401,6 +401,7 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.chrome.service import Service
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.common.action_chains import ActionChains
+from selenium.webdriver.chrome.options import Options
 from openai import OpenAI
 from channels.generic.websocket import AsyncWebsocketConsumer
 
