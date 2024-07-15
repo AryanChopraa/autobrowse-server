@@ -14,6 +14,7 @@ cffi==1.16.0
 channels==4.1.0
 channels-redis==4.2.0
 charset-normalizer==3.3.2
+click==8.1.7
 # comm @ file:///home/conda/feedstock_root/build_artifacts/comm_1710320294760/work
 constantly==23.10.4
 cryptography==42.0.8
@@ -101,6 +102,7 @@ Twisted==24.3.0
 txaio==23.1.1
 # typing_extensions @ file:///home/conda/feedstock_root/build_artifacts/typing_extensions_1717802530399/work
 urllib3==2.2.2
+uvicorn==0.30.1
 # wcwidth @ file:///home/conda/feedstock_root/build_artifacts/wcwidth_1704731205417/work
 webdriver-manager==4.0.1
 websocket-client==1.8.0

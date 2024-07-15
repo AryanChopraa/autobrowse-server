@@ -142,6 +142,16 @@ DATABASES = {
         },
     }
 }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'postgres',          
+#         'USER': getenv('POSTGRES_USER'),          
+#         'PASSWORD': getenv('POSTGRES_PASSWORD'),  
+#         'HOST': 'aws-0-ap-south-1.pooler.supabase.com',          
+#         'PORT': '6543',          
+#     }
+# }
 # if DEVELOPMENT_MODE is True:
 #     DATABASES = {
 #         'default': {
