@@ -436,10 +436,9 @@ from selenium.webdriver.common.action_chains import ActionChains
 from selenium.webdriver.chrome.options import Options
 from openai import OpenAI
 from channels.generic.websocket import AsyncWebsocketConsumer
-
-from config.prompts import SYSTEM_PROMPT
-from config.scripts import HIGHLIGHT_LINKS_SCRIPT
-from config.tools import TOOLS
+from automations.config.prompts import SYSTEM_PROMPT
+from automations.config.scripts import HIGHLIGHT_LINKS_SCRIPT
+from automations.config.tools import TOOLS
 
 load_dotenv()
 
