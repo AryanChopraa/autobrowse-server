@@ -42,7 +42,6 @@ def fetch_tasks(request):
 @permission_classes([IsAuthenticated])
 def fetch_task(request, session_id):
     user = request.user
-
     automation = get_object_or_404(Automation, session_id=session_id, user=user)
 
     task_data = {

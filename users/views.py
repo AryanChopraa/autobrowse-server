@@ -12,9 +12,7 @@ from rest_framework_simplejwt.views import (
 
 class CustomProviderAuthView(ProviderAuthView):
     def post(self, request, *args, **kwargs):
-        print("request", request)
         response = super().post(request, *args, **kwargs)
-        print("response:", response.data)
 
         if response.status_code == 201:
             access_token = response.data.get('access')
