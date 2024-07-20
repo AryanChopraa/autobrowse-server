@@ -12,7 +12,6 @@ from django.shortcuts import get_object_or_404
 @permission_classes([IsAuthenticated])
 def create_task(request):
     if request.method == 'POST':
-        print(request.body)
         user = request.user
         data = json.loads(request.body)
         task_description = data.get('objective')
@@ -43,9 +42,9 @@ def fetch_tasks(request):
 @permission_classes([IsAuthenticated])
 def fetch_task(request, session_id):
     user = request.user
-    print(user)
+
     automation = get_object_or_404(Automation, session_id=session_id, user=user)
-    
+
     task_data = {
         'id': automation.id,
         'objective': automation.objective,
