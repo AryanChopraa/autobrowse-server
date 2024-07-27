@@ -60,3 +60,4 @@ HIGHLIGHT_LINKS_SCRIPT = """
     });
 })();
 """
+

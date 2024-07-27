@@ -7,7 +7,6 @@ from rest_framework.decorators import api_view, permission_classes
 from rest_framework.permissions import IsAuthenticated
 from django.shortcuts import get_object_or_404
 
-
 @api_view(['POST'])
 @permission_classes([IsAuthenticated])
 def create_task(request):
@@ -53,3 +52,17 @@ def fetch_task(request, session_id):
     
     return JsonResponse(task_data)
 
+@api_view(['DELETE'])
+@permission_classes([IsAuthenticated])
+def delete_task(request, session_id):
+    user = request.user
+    
+    try:
+
+        automation = Automation.objects.get(session_id=session_id, user=user)
+        automation.delete()
+        return JsonResponse({'message': 'Task deleted successfully'}, status=200)
+    except ValueError:
+        return JsonResponse({'error': 'Invalid session ID format'}, status=400)
+    except Automation.DoesNotExist:
+        return JsonResponse({'error': 'Task not found'}, status=404)
