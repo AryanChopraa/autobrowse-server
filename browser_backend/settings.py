@@ -16,7 +16,8 @@ from os import getenv, path
 from pathlib import Path
 from django.core.management.utils import get_random_secret_key
 import dotenv
-
+from dotenv import load_dotenv
+from urllib.parse import urlparse
 
 
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -131,19 +132,19 @@ TEMPLATES = [
 WSGI_APPLICATION = 'browser_backend.wsgi.application'
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'db',  # Database name
-        'USER': 'db',  # Username
-        'PASSWORD': getenv('DATABASE_PASSWORD'),  # Password
-        'HOST': 'app-0ad30b3f-ea79-43a3-828e-8f34cdd46703-do-user-17176678-0.b.db.ondigitalocean.com',
-        'PORT': '25060',
-        'OPTIONS': {
-            'sslmode': 'require',  # Ensure SSL mode is required
-        },
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.postgresql',
+#         'NAME': 'db',  # Database name
+#         'USER': 'db',  # Username
+#         'PASSWORD': getenv('DATABASE_PASSWORD'),  # Password
+#         'HOST': 'app-0ad30b3f-ea79-43a3-828e-8f34cdd46703-do-user-17176678-0.b.db.ondigitalocean.com',
+#         'PORT': '25060',
+#         'OPTIONS': {
+#             'sslmode': 'require',  # Ensure SSL mode is required
+#         },
+#     }
+# }
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.postgresql',
@@ -167,6 +168,21 @@ DATABASES = {
 #     DATABASES = {
 #         'default': dj_database_url.parse( ('DATABASE_URL')),
 #     }
+
+
+# Replace the DATABASES section of your settings.py with this
+tmpPostgres = urlparse(getenv("DATABASE_URL"))
+
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': tmpPostgres.path.replace('/', ''),
+        'USER': tmpPostgres.username,
+        'PASSWORD': tmpPostgres.password,
+        'HOST': tmpPostgres.hostname,
+        'PORT': 5432,
+    }
+}
 
 
 AUTH_PASSWORD_VALIDATORS = [
@@ -268,7 +284,12 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_PERMISSION_CLASSES': [
         'rest_framework.permissions.IsAuthenticated',
-    ]
+    ],
+    'DEFAULT_RENDERER_CLASSES': [
+        'rest_framework.renderers.JSONRenderer',
+        'rest_framework.renderers.BrowsableAPIRenderer',
+    ],
+    'EXCEPTION_HANDLER': 'rest_framework.views.exception_handler'
 }
 
 DJOSER = {
