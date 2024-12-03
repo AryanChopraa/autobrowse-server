@@ -1,0 +1,11 @@
+version: '3.8'
+services:
+  web:
+    build: .
+    ports:
+      - "8080:8080"
+    env_file:
+      - .env
+    volumes:
+      - .:/BROWSER_BACKEND
+    command: daphne -b 0.0.0.0 -p 8080 browser_backend.asgi:application
